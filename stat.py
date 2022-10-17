@@ -26,10 +26,10 @@ t_content = json.loads(t.content)
 h_content = json.loads(h.content)
 r_content = json.loads(r.content)
 
-print(r_content)
+#print(r_content)
 
-with open('data.json', 'w') as f:
-    json.dump(r_content, f)
+# with open('data.json', 'w') as f:
+#     json.dump(r_content, f)
 
 #dict is the data types get is how the data is pulled from keys
 # print(h_content.get('album').get('album_type'))
@@ -38,7 +38,7 @@ with open('data.json', 'w') as f:
 
 #list store data to pull and can be pulled out of order or seperately
 #(you get the data by pulling from the index)
-twitch_chat = ['JCWHITE', 'MachineGUn', 'Hero']
+#twitch_chat = ['JCWHITE', 'MachineGUn', 'Hero']
 #print(twitch_chat[1])
 
 
@@ -71,52 +71,16 @@ track_id_info = {
 'tempo_confidence' : r_content.get('track').get('tempo_confidence'),
 'mode_confidence' : r_content.get('track').get('mode_confidence'),
 'key_confidence' : r_content.get('track').get('key_confidence'),
-#'bar' : r_content.get('bar').get('start'),
-'key' : r_content.get('track').get('key'),
-'key' : r_content.get('track').get('key'),
-'key' : r_content.get('track').get('key'),
+#'bar' : r_content.get('bar').get('start'), insert
 }
-#print(track_id_info)
-bopm = r_content.get('bars')[0].get('start')
-# bapm =r_content.get('bars')[0].get('start'), ('bars').get('duration'), ('bars').get('confidence')
+print(track_id_info)
+
 
 #print(bopm)
 #print(t_content)
-
-##time_signature = estimated time signature for beats per measure
-##mode = 1 is major 0 is minor
+## time_signature = estimated time signature for beats per measure
+## mode = 1 is major 0 is minor
 ## Key Guide = The key the track is in. Integers map to pitches
-# using standard Pitch Class notation.
-# E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.
+## using standard Pitch Class notation.
+## E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.
 ##
-
-
-
-# We make a request up above
-# We grab the json from the response
-# track_info = h.json()
-
-# #variable for artist name 
-# artist_info = h.json()
-
-# #variable for Song ID
-# track_id = h.json()
-
-
-# #used to print the artist name, we can use this to extract certain info
-# result = artist_info['artists'][0]['name']
-# print(result)
-
-# # We can now grab data from the json object (which is just a python Dictionairy)
-# print(track_info['name'])
-
-# #print track id
-# print(track_id['id'])
-
-
-
-#time to dump data into excel these are the steps fopr csv
-# with open("song_data.csv", "w") as csv_file:
-#     csv_writer = csv.writer(csv_file)
-#     csv_writer.writerow(["Song", "Artist"])
-#     csv_writer.writerow([track_info['name'],result])
