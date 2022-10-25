@@ -40,13 +40,13 @@ tatums = data_beat.get('tatums')
 # barcon = loop(bars, 'confidence').get('math')
 
 #this will pull beats start info
-beatstart = loop(beats, 'start').get('match')
+beatstart = loop(beats, 'start').get('math')
 
 #this will pull beats duration info
-beatdur = loop(beats, 'duration').get('match')
+beatdur = loop(beats, 'duration').get('math')
 
 #this will pull beats confidence info
-beatcon = loop(beats, 'confidence').get('match')
+beatcon = loop(beats, 'confidence').get('math')
 
 
 print(beatstart, beatdur, beatcon)

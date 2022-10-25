@@ -19,8 +19,8 @@ headers = {
 BASE_URL = 'https://api.spotify.com/v1/'
 
 # Track ID from the URI
-track_id = '5sNESr6pQfIhL3krM8CtZn'
-artist_id = '3nFkdlSjzX9mRTtwJOzDYB'
+track_id = '60a0Rd6pjrkxjPbaKzXjfq'
+artist_id = '6XyY86QOPPrYVGvF9ch6wz'
 
 # actual GET request with proper header as of now you need to make one for each stat
 t = requests.get(BASE_URL + 'audio-features/' + track_id, headers=headers)
@@ -33,7 +33,7 @@ t_content = json.loads(t.content)
 h_content = json.loads(h.content)
 r_content = json.loads(r.content)
 s_content = json.loads(s.content)
-#print(h_content)
+#pprint.pprint(s_content)
 #print(s_content.get('genres'))
 
 
@@ -80,6 +80,10 @@ def loop(input_list:list, value):
 #or print each one seen below
 track_id_info = {
 "artists_name" : h_content.get('artists')[0].get('name', 'NA'),
+
+
+"artists_ftname_2" : 'NA',
+"artists_name_3" : 'NA',
 "spotify_artist_id" : s_content.get('id', 'NA'),
 "song_name" : h_content.get('name'),
 "spotify_track_id" : h_content.get('artists')[0].get('id', 'NA'),
@@ -132,10 +136,30 @@ track_id_info = {
 }
 
 #print(h_content.get('name'))
+#loop for finding all genres and placing them in plce holders in track_id_info DICt.
 songtype = s_content.get('genres')
 
 for genre_position, genre_value in enumerate(songtype, start=1):
     track_id_info[f"genre_{genre_position}"] = genre_value
+
+
+#loop for finding all ft artist and placing them in plce holders in track_id_info DICt.
+artistft =  h_content.get('artists')
+count = 1
+for artist in artistft:
+    track_id_info[f"artists_ftname_{count}"] = artist['name']
+    count=+1
+
+
+# for artistft_position, artist_nameft_value in enumerate(artistft, start=1):
+#     track_id_info[f"artists_ftname_{artistft_position}"] = artist_nameft_value
+
+
+# artist_id_ft =  h_content.get('artists')[1].get('id', 'NA')
+
+# for artist_ft_id_position, artist_id_ft_value in enumerate(artist_id_ft, start=1):
+#     track_id_info[f"artists_id_ft_{artist_ft_id_position}"] = artist_id_ft_value
+
 
 # print(track_id_info)
 pprint.pprint(track_id_info, sort_dicts=False)

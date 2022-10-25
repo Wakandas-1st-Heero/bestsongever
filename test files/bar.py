@@ -1,12 +1,15 @@
+from email import contentmanager
 import json
 import numpy
+from test import r.content
   
-# Opening JSON file
-f = open('data.json')
+r_content = json.loads(r.content)
+
   
 # returns JSON object as 
 # a dictionary
-data = json.load(f)
+data = r_content
+
   
 # Iterating through the json
 # list
@@ -65,7 +68,6 @@ print ("Total of %3d duration" % startscon)
 # print(startscon / new_index)
 
 print(starts / new_index , startsdur / new_indexdur, startscon / new_indexcon)
-# Closing file
-f.close()
+
 
 
