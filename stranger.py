@@ -17,10 +17,11 @@ headers = {
 
 # base URL of all Spotify API endpoints
 BASE_URL = 'https://api.spotify.com/v1/'
+endpoint_url = "https://api.spotify.com/v1/recommendations?"
 
 # Track ID from the URI
-track_id = '5sNESr6pQfIhL3krM8CtZn'
-artist_id = '3nFkdlSjzX9mRTtwJOzDYB'
+track_id = '6c9UjtsLpfK5hTwTrdRDbR'
+artist_id = '6FBDaR13swtiWwGhX1WQsP'
 
 # actual GET request with proper header as of now you need to make one for each stat
 t = requests.get(BASE_URL + 'audio-features/' + track_id, headers=headers)
@@ -33,28 +34,10 @@ t_content = json.loads(t.content)
 h_content = json.loads(h.content)
 r_content = json.loads(r.content)
 s_content = json.loads(s.content)
-#print(h_content)
+# pprint.pprint(h_content)
 #print(s_content.get('genres'))
 
-
-
-# with open('data.json', 'w') as f:
-#     json.dump(r_content, f)
-
-#dict is the data types get is how the data is pulled from keys
-# print(h_content.get('album').get('album_type'))
-# print(h_content.get('album').get("bumbum_type", "You Failed Me Bro"))
-
-
-#list store data to pull and can be pulled out of order or seperately
-#(you get the data by pulling from the index)
-#twitch_chat = ['JCWHITE', 'MachineGUn', 'Hero']
-#print(twitch_chat[1])
-
-
-#twitch_chat = ['JCWHITE', 'MachineGUn', 'Hero', {"count_of_message":"1337"}]
-# print(twitch_chat[3].get('count_of_message'))
-
+#My Big DICt. 
 data = r_content
 
 def loop(input_list:list, value):
@@ -79,8 +62,13 @@ def loop(input_list:list, value):
 #you have 2 choices here loop it all to do less
 #or print each one seen below
 track_id_info = {
-"artists_name" : h_content.get('artists')[0].get('name', 'NA'),
-"spotify_artist_id" : s_content.get('id', 'NA'),
+"spotify_artists_name_0" : 'NA',
+"spotify_artists_name_1" : 'NA',
+"spotify_artists_name_2" : 'NA',
+
+"spotify_artist_id_0" : 'NA',
+"spotify_artist_id_1" : 'NA',
+"spotify_artist_id_2" : 'NA',
 "song_name" : h_content.get('name'),
 "spotify_track_id" : h_content.get('artists')[0].get('id', 'NA'),
 
@@ -131,13 +119,29 @@ track_id_info = {
 'bars_length' : len(r_content.get('bars', 'NA')),
 }
 
-#print(h_content.get('name'))
+
+#loop for finding all genres and placing them in plce holders in track_id_info DICt.
 songtype = s_content.get('genres')
 
 for genre_position, genre_value in enumerate(songtype, start=1):
     track_id_info[f"genre_{genre_position}"] = genre_value
 
-# print(track_id_info)
+
+#loop for finding all ft artist and placing them in plce holders in track_id_info DICt.
+artistft =  h_content.get('artists')
+count = 0
+for artist in artistft:
+    track_id_info[f"spotify_artists_name_{count}"] = artist['name']
+    count+=1
+
+#loop for finding all ft artist and placing them in plce holders in track_id_info DICt.
+artistid =  h_content.get('artists')
+count = 0
+for newartistid in artistid:
+    track_id_info[f"spotify_artist_id_{count}"] = newartistid['id']
+    count+=1
+
+
 pprint.pprint(track_id_info, sort_dicts=False)
 # data_list=list(track_id_info.items())
 # print(data_list)
@@ -175,17 +179,7 @@ bardur = loop(bars, 'duration').get('math')
 #this will pull bars confidence info
 barcon = loop(bars, 'confidence').get('math')
 
-# print('bar_start', barstart,'bar_duration', bardur, 'bar_confidence', barcon)
-
-# print( 'tatum_start', tatstart, 'tatum_duration', tatdur, 'tatum_confidence', tatcon)
-
-# print( 'beat_start', beatstart, 'beat_duration', beatdur, 'beat_confidence', beatcon)
-
-#now do it for beats
-
 #Iterating through the json list
-
- 
 # input arguments your track dict
 # input arguments the filename of the newly created csv
 def _export_to_csv(input_dict: dict = None, export_filename: str = None):
@@ -213,8 +207,7 @@ test_export = _export_to_csv(input_dict=track_id_info, export_filename="text_exp
 #print(test_export)
 
 
-#print(bopm)
-#print(t_content)
+
 ## time_signature = estimated time signature for beats per measure
 ## mode = 1 is major 0 is minor
 ## Key Guide = The key the track is in. Integers map to pitches

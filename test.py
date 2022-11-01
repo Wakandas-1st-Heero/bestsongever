@@ -17,10 +17,11 @@ headers = {
 
 # base URL of all Spotify API endpoints
 BASE_URL = 'https://api.spotify.com/v1/'
+endpoint_url = "https://api.spotify.com/v1/recommendations?"
 
 # Track ID from the URI
-track_id = '60a0Rd6pjrkxjPbaKzXjfq'
-artist_id = '6XyY86QOPPrYVGvF9ch6wz'
+track_id = '6c9UjtsLpfK5hTwTrdRDbR'
+artist_id = '6FBDaR13swtiWwGhX1WQsP'
 
 # actual GET request with proper header as of now you need to make one for each stat
 t = requests.get(BASE_URL + 'audio-features/' + track_id, headers=headers)
@@ -33,7 +34,7 @@ t_content = json.loads(t.content)
 h_content = json.loads(h.content)
 r_content = json.loads(r.content)
 s_content = json.loads(s.content)
-#pprint.pprint(s_content)
+# pprint.pprint(h_content)
 #print(s_content.get('genres'))
 
 
@@ -79,12 +80,13 @@ def loop(input_list:list, value):
 #you have 2 choices here loop it all to do less
 #or print each one seen below
 track_id_info = {
-"artists_name" : h_content.get('artists')[0].get('name', 'NA'),
+"spotify_artists_name_0" : 'NA',
+"spotify_artists_name_1" : 'NA',
+"spotify_artists_name_2" : 'NA',
 
-
-"artists_ftname_2" : 'NA',
-"artists_name_3" : 'NA',
-"spotify_artist_id" : s_content.get('id', 'NA'),
+"spotify_artist_id_0" : 'NA',
+"spotify_artist_id_1" : 'NA',
+"spotify_artist_id_2" : 'NA',
 "song_name" : h_content.get('name'),
 "spotify_track_id" : h_content.get('artists')[0].get('id', 'NA'),
 
@@ -145,10 +147,18 @@ for genre_position, genre_value in enumerate(songtype, start=1):
 
 #loop for finding all ft artist and placing them in plce holders in track_id_info DICt.
 artistft =  h_content.get('artists')
-count = 1
+count = 0
 for artist in artistft:
-    track_id_info[f"artists_ftname_{count}"] = artist['name']
-    count=+1
+    track_id_info[f"spotify_artists_name_{count}"] = artist['name']
+    count+=1
+
+#loop for finding all ft artist and placing them in plce holders in track_id_info DICt.
+artistid =  h_content.get('artists')
+count = 0
+for newartistid in artistid:
+    track_id_info[f"spotify_artist_id_{count}"] = newartistid['id']
+    count+=1
+
 
 
 # for artistft_position, artist_nameft_value in enumerate(artistft, start=1):
@@ -245,3 +255,32 @@ test_export = _export_to_csv(input_dict=track_id_info, export_filename="text_exp
 ## using standard Pitch Class notation.
 ## E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.
 ##
+
+
+
+
+
+
+# #Setting min/max for pram
+# limit = 1
+# seed_genres=""
+# seed_artists = "4NHQUGzhtTLFvgF5SZesLK,3RNrq3jvMZxD9ZyoOZbQOD,6XyY86QOPPrYVGvF9ch6wz,3nFkdlSjzX9mRTtwJOzDYB"
+# seed_tracks = ""
+# max_acousticness = ".50"
+# min_acousticness = ".25"
+# max_danceability = ".50"
+# min_danceability = ".25"
+
+# endpoint_url = "https://api.spotify.com/v1/recommendations?"
+# prama = f'{endpoint_url}limit={limit}&seed_genres={seed_genres}&seed_tracks={seed_tracks}&seed_artists={seed_artists}'
+# prama += f'&max_acousticness={max_acousticness}'
+# prama += f'&min_acousticness={min_acousticness}'
+# prama += f'&max_danceability={max_acousticness}'
+# prama += f'&min_danceability={min_acousticness}'
+
+
+# # print(query)
+# min_max_result = requests.get(pram,headers=headers)
+
+# min_max_result_content = json.loads(min_max_result.content)
+# pprint.pprint(min_max_result_content, compact=True)
