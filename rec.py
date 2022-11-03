@@ -96,6 +96,3 @@ for track in result_content["tracks"]:
         
         pprint.pprint("artists_id: " + artist["id"])
         
-# rec_data = (pprint.pprint("track_id: " + track["id"]), pprint.pprint("artists_id: " + artist["id"]) )
-
-# pprint.pprint(rec_data)
