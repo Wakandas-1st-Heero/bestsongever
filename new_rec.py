@@ -20,8 +20,8 @@ BASE_URL = 'https://api.spotify.com/v1/'
 endpoint_url = "https://api.spotify.com/v1/recommendations?"
 
 # Track ID from the URI
-track_id = '6XQCfpuRDEoIooAHM4i9yx'
-artist_id = '4NHQUGzhtTLFvgF5SZesLK'
+track_id = '6c9UjtsLpfK5hTwTrdRDbR'
+artist_id = '6FBDaR13swtiWwGhX1WQsP'
 
 # actual GET request with proper header as of now you need to make one for each stat
 t = requests.get(BASE_URL + 'audio-features/' + track_id, headers=headers)
@@ -37,25 +37,7 @@ s_content = json.loads(s.content)
 # pprint.pprint(h_content)
 #print(s_content.get('genres'))
 
-
-
-# with open('data.json', 'w') as f:
-#     json.dump(r_content, f)
-
-#dict is the data types get is how the data is pulled from keys
-# print(h_content.get('album').get('album_type'))
-# print(h_content.get('album').get("bumbum_type", "You Failed Me Bro"))
-
-
-#list store data to pull and can be pulled out of order or seperately
-#(you get the data by pulling from the index)
-#twitch_chat = ['JCWHITE', 'MachineGUn', 'Hero']
-#print(twitch_chat[1])
-
-
-#twitch_chat = ['JCWHITE', 'MachineGUn', 'Hero', {"count_of_message":"1337"}]
-# print(twitch_chat[3].get('count_of_message'))
-
+#My Big DICt. 
 data = r_content
 
 def loop(input_list:list, value):
@@ -137,7 +119,7 @@ track_id_info = {
 'bars_length' : len(r_content.get('bars', 'NA')),
 }
 
-#print(h_content.get('name'))
+
 #loop for finding all genres and placing them in plce holders in track_id_info DICt.
 songtype = s_content.get('genres')
 
@@ -160,18 +142,6 @@ for newartistid in artistid:
     count+=1
 
 
-
-# for artistft_position, artist_nameft_value in enumerate(artistft, start=1):
-#     track_id_info[f"artists_ftname_{artistft_position}"] = artist_nameft_value
-
-
-# artist_id_ft =  h_content.get('artists')[1].get('id', 'NA')
-
-# for artist_ft_id_position, artist_id_ft_value in enumerate(artist_id_ft, start=1):
-#     track_id_info[f"artists_id_ft_{artist_ft_id_position}"] = artist_id_ft_value
-
-
-# print(track_id_info)
 pprint.pprint(track_id_info, sort_dicts=False)
 # data_list=list(track_id_info.items())
 # print(data_list)
@@ -209,17 +179,7 @@ bardur = loop(bars, 'duration').get('math')
 #this will pull bars confidence info
 barcon = loop(bars, 'confidence').get('math')
 
-# print('bar_start', barstart,'bar_duration', bardur, 'bar_confidence', barcon)
-
-# print( 'tatum_start', tatstart, 'tatum_duration', tatdur, 'tatum_confidence', tatcon)
-
-# print( 'beat_start', beatstart, 'beat_duration', beatdur, 'beat_confidence', beatcon)
-
-#now do it for beats
-
 #Iterating through the json list
-
- 
 # input arguments your track dict
 # input arguments the filename of the newly created csv
 def _export_to_csv(input_dict: dict = None, export_filename: str = None):
@@ -243,44 +203,14 @@ def _export_to_csv(input_dict: dict = None, export_filename: str = None):
         return "Failure"
 
 
-test_export = _export_to_csv(input_dict=track_id_info, export_filename="text_export.csv")
+test_export = _export_to_csv(input_dict=track_id_info, export_filename="Rec_export.csv")
 #print(test_export)
 
 
-#print(bopm)
-#print(t_content)
+
 ## time_signature = estimated time signature for beats per measure
 ## mode = 1 is major 0 is minor
 ## Key Guide = The key the track is in. Integers map to pitches
 ## using standard Pitch Class notation.
 ## E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.
 ##
-
-
-
-
-
-
-# #Setting min/max for pram
-# limit = 1
-# seed_genres=""
-# seed_artists = "4NHQUGzhtTLFvgF5SZesLK,3RNrq3jvMZxD9ZyoOZbQOD,6XyY86QOPPrYVGvF9ch6wz,3nFkdlSjzX9mRTtwJOzDYB"
-# seed_tracks = ""
-# max_acousticness = ".50"
-# min_acousticness = ".25"
-# max_danceability = ".50"
-# min_danceability = ".25"
-
-# endpoint_url = "https://api.spotify.com/v1/recommendations?"
-# prama = f'{endpoint_url}limit={limit}&seed_genres={seed_genres}&seed_tracks={seed_tracks}&seed_artists={seed_artists}'
-# prama += f'&max_acousticness={max_acousticness}'
-# prama += f'&min_acousticness={min_acousticness}'
-# prama += f'&max_danceability={max_acousticness}'
-# prama += f'&min_danceability={min_acousticness}'
-
-
-# # print(query)
-# min_max_result = requests.get(pram,headers=headers)
-
-# min_max_result_content = json.loads(min_max_result.content)
-# pprint.pprint(min_max_result_content, compact=True)
