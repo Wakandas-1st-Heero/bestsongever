@@ -34,7 +34,7 @@ t_content = json.loads(t.content)
 h_content = json.loads(h.content)
 r_content = json.loads(r.content)
 s_content = json.loads(s.content)
-# pprint.pprint(h_content)
+# pprint.pprint(h_content, compact=True)
 #print(s_content.get('genres'))
 
 
@@ -83,13 +83,11 @@ track_id_info = {
 "spotify_artists_name_0" : 'NA',
 "spotify_artists_name_1" : 'NA',
 "spotify_artists_name_2" : 'NA',
-
 "spotify_artist_id_0" : 'NA',
 "spotify_artist_id_1" : 'NA',
 "spotify_artist_id_2" : 'NA',
 "song_name" : h_content.get('name'),
-"spotify_track_id" : h_content.get('artists')[0].get('id', 'NA'),
-
+"spotify_track_id" : h_content.get('id', 'NA'),
 "album_name" : h_content.get('album').get('name', 'NA'),
 "genre_1" :'NA',
 "genre_2" :'NA',
@@ -137,7 +135,8 @@ track_id_info = {
 'bars_length' : len(r_content.get('bars', 'NA')),
 }
 
-#print(h_content.get('name'))
+pprint.pprint(track_id_info, sort_dicts=False)
+
 #loop for finding all genres and placing them in plce holders in track_id_info DICt.
 songtype = s_content.get('genres')
 
@@ -172,7 +171,7 @@ for newartistid in artistid:
 
 
 # print(track_id_info)
-pprint.pprint(track_id_info, sort_dicts=False)
+# pprint.pprint(track_id_info, sort_dicts=False)
 # data_list=list(track_id_info.items())
 # print(data_list)
 # returns JSON object as 
@@ -243,8 +242,8 @@ def _export_to_csv(input_dict: dict = None, export_filename: str = None):
         return "Failure"
 
 
-test_export = _export_to_csv(input_dict=track_id_info, export_filename="text_export.csv")
-#print(test_export)
+# test_export = _export_to_csv(input_dict=track_id_info, export_filename="text_export.csv")
+# print(test_export)
 
 
 #print(bopm)

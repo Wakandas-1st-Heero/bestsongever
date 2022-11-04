@@ -61,18 +61,17 @@ def loop(input_list:list, value):
 
 #you have 2 choices here loop it all to do less
 #or print each one seen below
-track_id_info = {
+track_id_info =  track_id_info = {
 "spotify_artists_name_0" : 'NA',
 "spotify_artists_name_1" : 'NA',
 "spotify_artists_name_2" : 'NA',
-
 "spotify_artist_id_0" : 'NA',
 "spotify_artist_id_1" : 'NA',
 "spotify_artist_id_2" : 'NA',
 "song_name" : h_content.get('name'),
-"spotify_track_id" : h_content.get('artists')[0].get('id', 'NA'),
-
+"spotify_track_id" : h_content.get('id', 'NA'),
 "album_name" : h_content.get('album').get('name', 'NA'),
+"http_status_code" : f'{t.status_code}{h.status_code}',
 "genre_1" :'NA',
 "genre_2" :'NA',
 "genre_3" :'NA',

@@ -16,17 +16,33 @@ def main():
     tracks = rec.get_recommended_tracks(3, "4NHQUGzhtTLFvgF5SZesLK,3RNrq3jvMZxD9ZyoOZbQOD,6XyY86QOPPrYVGvF9ch6wz,3nFkdlSjzX9mRTtwJOzDYB")
 
     track_details = []
-
+    count = 0
+    # print(tracks)
     for track in tracks:
+      
         #update this so I can get all logic and artist
-        track_detail = get_details(track["track_id"], track["artist_ids"][0])
-        
+        # track_detail = get_details(track["track_id"], track["artist_ids"][0])
+        if len(track["artist_ids"]) > 1:
+            print("this track ID has mult. artist")
+            for artist_id in track["artist_ids"]:
+                print(f'we are going  get the track ID {track["track_id"]} and artist_ids {artist_id}')
 
-        pprint.pprint(track_detail)
+                track_detail = get_details(track["track_id"], artist_id)
 
-        track_details.append(track_detail)
-    
-    test_export = export._export_to_csv(input_dict=track_detail, export_filename="Rec1_export.csv")
+                track_details.append(track_detail)
+        else:
+            print("this track ID has one artist")
+            print(f'we are going  get the track ID {track["track_id"]} and artist_ids {track["artist_ids"][0]}')
+            track_detail = get_details(track["track_id"], track["artist_ids"][0])
+            track_details.append(track_detail)
+            # test_export = export._export_to_csv(input_dict=track_details, export_filename="Rec1_export.csv")
+
+    pprint.pprint(track_details, sort_dicts=False)
+
+      
+    for track in track_details:
+
+        test_export = export._export_to_csv(input_dict=track, export_filename="Rec1_export.csv")
 
 
 def get_details(track_id, artist_id):
@@ -44,7 +60,7 @@ def get_details(track_id, artist_id):
     r = requests.get(BASE_URL + 'audio-analysis/' + track_id, headers=headers)
     h = requests.get(BASE_URL + 'tracks/' + track_id, headers=headers)
     s = requests.get(BASE_URL + 'artists/'+ artist_id, headers=headers)
-
+    print(t.status_code, r.status_code, s.status_code, h.status_code)
 
     t_content = json.loads(t.content)
     h_content = json.loads(h.content)
@@ -81,14 +97,13 @@ def get_details(track_id, artist_id):
     "spotify_artists_name_0" : 'NA',
     "spotify_artists_name_1" : 'NA',
     "spotify_artists_name_2" : 'NA',
-
     "spotify_artist_id_0" : 'NA',
     "spotify_artist_id_1" : 'NA',
     "spotify_artist_id_2" : 'NA',
     "song_name" : h_content.get('name'),
-    "spotify_track_id" : h_content.get('artists')[0].get('id', 'NA'),
-
+    "spotify_track_id" : h_content.get('id', 'NA'),
     "album_name" : h_content.get('album').get('name', 'NA'),
+    "http_status_code" : f'{t.status_code}{h.status_code}',
     "genre_1" :'NA',
     "genre_2" :'NA',
     "genre_3" :'NA',
