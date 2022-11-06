@@ -5,8 +5,8 @@ import pprint
 
 
 def main():
-    limit = 3
-    seed_artists = "4NHQUGzhtTLFvgF5SZesLK,3RNrq3jvMZxD9ZyoOZbQOD,6XyY86QOPPrYVGvF9ch6wz,3nFkdlSjzX9mRTtwJOzDYB"
+    limit = 5
+    seed_artists = "27T030eWyCQRmDyuvr1kxY"
 
     get_recommended_tracks(limit, seed_artists)
 
@@ -17,18 +17,18 @@ def get_recommended_tracks(limit, seed_artists):
     }
 
     #for all known ranges, best for using with genre and artist
-    seed_genres=""
+    seed_genres="german hard rock, metal, german rock "
     seed_tracks = ""
-    target_tempo = ".50"
-    target_danceability = ".050"
-    target_liveness = ".50"
-    target_popularity = "1"
-    target_acousticness = ".50"
-    target_energy = ".50"
-    target_instrumentalness = ".50"
+    target_tempo = ".050"
+    target_danceability = ".0452"
+    target_liveness = ".103"
+    target_popularity = "75"
+    target_acousticness = ".315"
+    target_energy = ".524"
+    target_instrumentalness = "0"
     target_key = "1"
-    target_speechiness = ".50"
-    target_valence = ".50"
+    target_speechiness = ".0351"
+    target_valence = ".246"
 
     endpoint_url = "https://api.spotify.com/v1/recommendations?"
     query = f'{endpoint_url}limit={limit}&seed_genres={seed_genres}&seed_tracks={seed_tracks}&seed_artists={seed_artists}'
@@ -48,7 +48,7 @@ def get_recommended_tracks(limit, seed_artists):
     result = requests.get(query, headers=headers)
 
     result_content = json.loads(result.content)
-    # pprint.pprint(result_content, compact=True)
+    pprint.pprint(result_content, compact=True)
 
     tracks = []
 
@@ -65,7 +65,7 @@ def get_recommended_tracks(limit, seed_artists):
         tracks.append(
             {
                 "track_id": track_id, 
-                "artist_ids": artist_ids
+                "artist_id": artist_ids
             }
         )
 

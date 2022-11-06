@@ -9,8 +9,7 @@ import csv
 import os
 import pprint
 
-
-
+#used to get token and auth.
 headers = {
     'Authorization': 'Bearer {token}'.format(token=access_token)
 }
@@ -20,8 +19,8 @@ BASE_URL = 'https://api.spotify.com/v1/'
 endpoint_url = "https://api.spotify.com/v1/recommendations?"
 
 # Track ID from the URI
-track_id = '6c9UjtsLpfK5hTwTrdRDbR'
-artist_id = '6FBDaR13swtiWwGhX1WQsP'
+track_id = '3ovjw5HZZv43SxTwApooCM'
+artist_id = '27T030eWyCQRmDyuvr1kxY'
 
 # actual GET request with proper header as of now you need to make one for each stat
 t = requests.get(BASE_URL + 'audio-features/' + track_id, headers=headers)
@@ -34,7 +33,7 @@ t_content = json.loads(t.content)
 h_content = json.loads(h.content)
 r_content = json.loads(r.content)
 s_content = json.loads(s.content)
-# pprint.pprint(h_content)
+pprint.pprint(s_content, compact= True)
 #print(s_content.get('genres'))
 
 #My Big DICt. 
@@ -71,7 +70,6 @@ track_id_info =  track_id_info = {
 "song_name" : h_content.get('name'),
 "spotify_track_id" : h_content.get('id', 'NA'),
 "album_name" : h_content.get('album').get('name', 'NA'),
-"http_status_code" : f'{t.status_code}{h.status_code}',
 "genre_1" :'NA',
 "genre_2" :'NA',
 "genre_3" :'NA',
@@ -202,7 +200,7 @@ def _export_to_csv(input_dict: dict = None, export_filename: str = None):
         return "Failure"
 
 
-test_export = _export_to_csv(input_dict=track_id_info, export_filename="text_export.csv")
+# test_export = _export_to_csv(input_dict=track_id_info, export_filename="text_export.csv")
 #print(test_export)
 
 

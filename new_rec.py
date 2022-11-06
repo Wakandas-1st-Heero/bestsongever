@@ -13,32 +13,28 @@ import rec
 
 
 def main():
-    tracks = rec.get_recommended_tracks(3, "4NHQUGzhtTLFvgF5SZesLK,3RNrq3jvMZxD9ZyoOZbQOD,6XyY86QOPPrYVGvF9ch6wz,3nFkdlSjzX9mRTtwJOzDYB")
+    tracks = rec.get_recommended_tracks(5, "27T030eWyCQRmDyuvr1kxY")
 
     track_details = []
     count = 0
-    # print(tracks)
     for track in tracks:
       
         #update this so I can get all logic and artist
         # track_detail = get_details(track["track_id"], track["artist_ids"][0])
-        if len(track["artist_ids"]) > 1:
-            print("this track ID has mult. artist")
-            for artist_id in track["artist_ids"]:
-                print(f'we are going  get the track ID {track["track_id"]} and artist_ids {artist_id}')
+        if len(track["artist_id"]) > 1:
+           
+            for artist_ids in track["artist_id"]:
+              
 
-                track_detail = get_details(track["track_id"], artist_id)
+                track_detail = get_details(track["track_id"], artist_ids)
 
                 track_details.append(track_detail)
         else:
-            print("this track ID has one artist")
-            print(f'we are going  get the track ID {track["track_id"]} and artist_ids {track["artist_ids"][0]}')
-            track_detail = get_details(track["track_id"], track["artist_ids"][0])
+            track_detail = get_details(track["track_id"], track["artist_id"][0])
             track_details.append(track_detail)
             # test_export = export._export_to_csv(input_dict=track_details, export_filename="Rec1_export.csv")
 
     pprint.pprint(track_details, sort_dicts=False)
-
       
     for track in track_details:
 
@@ -60,7 +56,7 @@ def get_details(track_id, artist_id):
     r = requests.get(BASE_URL + 'audio-analysis/' + track_id, headers=headers)
     h = requests.get(BASE_URL + 'tracks/' + track_id, headers=headers)
     s = requests.get(BASE_URL + 'artists/'+ artist_id, headers=headers)
-    print(t.status_code, r.status_code, s.status_code, h.status_code)
+    
 
     t_content = json.loads(t.content)
     h_content = json.loads(h.content)
@@ -94,6 +90,7 @@ def get_details(track_id, artist_id):
     #you have 2 choices here loop it all to do less
     #or print each one seen below
     track_id_info = {
+        
     "spotify_artists_name_0" : 'NA',
     "spotify_artists_name_1" : 'NA',
     "spotify_artists_name_2" : 'NA',
@@ -150,7 +147,7 @@ def get_details(track_id, artist_id):
     'bars_length' : len(r_content.get('bars', 'NA')),
     }
 
-
+    
     #loop for finding all genres and placing them in plce holders in track_id_info DICt.
     songtype = s_content.get('genres')
 
